@@ -2,497 +2,325 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Jason.Vietnam — Insider Access</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg: #121212;
-    --bg-elev: #191919;
-    --card: #1C1C1C;
-    --line: rgba(212,175,55,0.18);
-    --line-soft: rgba(255,255,255,0.07);
-    --gold: #D4AF37;
-    --gold-soft: rgba(212,175,55,0.55);
-    --ink: #F2F0EA;
-    --muted: #9C9A92;
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  body{ background: var(--bg); color: var(--ink); font-family:'Inter', sans-serif; -webkit-font-smoothing:antialiased; }
-  .wrap{ max-width: 1000px; margin:0 auto; padding:0 24px; }
-  a{ color:inherit; }
-
-  /* ---------- TOP SOCIAL BAR ---------- */
-  .topbar{ background: var(--bg-elev); border-bottom:1px solid var(--line); }
-  .topbar .wrap{ display:flex; justify-content:space-between; align-items:center; padding:10px 24px; flex-wrap:wrap; gap:10px; }
-  .topbar .social-row{ display:flex; gap:20px; flex-wrap:wrap; }
-  .social-item{ display:flex; align-items:center; gap:7px; font-size:12px; text-decoration:none; color:var(--muted); transition:.2s ease; }
-  .social-item:hover{ color: var(--gold); }
-  .social-item svg{ width:15px; height:15px; stroke: var(--gold); flex-shrink:0; }
-  .topbar .tagline{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.08em; color:#5f5d57; }
-
-  /* ---------- NAV ---------- */
-  nav{ position:sticky; top:0; z-index:40; background: rgba(18,18,18,0.9); backdrop-filter: blur(10px); border-bottom:1px solid var(--line-soft); }
-  nav .wrap{ display:flex; justify-content:space-between; align-items:center; padding-top:16px; padding-bottom:16px; }
-  .brand{ font-family:'Cormorant Garamond', serif; font-size:21px; letter-spacing:.05em; color:var(--gold); }
-  .lang-switch{ display:flex; gap:2px; border:1px solid var(--line); border-radius:20px; padding:3px; }
-  .lang-switch button{ background:none; border:none; color:var(--muted); font-family:'IBM Plex Mono', monospace; font-size:11px; padding:6px 14px; border-radius:16px; cursor:pointer; letter-spacing:.05em; }
-  .lang-switch button.active{ background: var(--gold); color:#121212; font-weight:600; }
-
-  /* ---------- HERO ---------- */
-  .hero{ padding: 70px 0 60px; position:relative; }
-  .eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color: var(--gold-soft); margin-bottom:24px; display:flex; align-items:center; gap:10px; }
-  .eyebrow::before{ content:""; width:22px; height:1px; background: var(--gold); }
-  h1{ font-family:'Cormorant Garamond', serif; font-weight:500; font-size: clamp(36px, 5.8vw, 60px); line-height:1.14; max-width:800px; letter-spacing:.01em; }
-  h1 em{ font-style:italic; color: var(--gold); font-weight:500; }
-  .hero p.lede{ margin-top:22px; max-width:560px; font-size:16px; line-height:1.75; color: var(--muted); }
-  .hero-cta{ margin-top:34px; display:flex; gap:14px; flex-wrap:wrap; }
-  .btn{ font-family:'Inter', sans-serif; font-weight:600; font-size:13px; letter-spacing:.02em; padding:14px 26px; border-radius:2px; cursor:pointer; border:1px solid var(--gold); display:inline-flex; align-items:center; gap:8px; text-decoration:none; transition:.2s ease; }
-  .btn-gold{ background: var(--gold); color:#121212; }
-  .btn-gold:hover{ background:#e6c25c; }
-  .btn-ghost{ background:transparent; color: var(--ink); border-color: var(--line-soft); }
-  .btn-ghost:hover{ border-color: var(--gold); color: var(--gold); }
-  .stat-strip{ margin-top:48px; display:flex; gap:40px; flex-wrap:wrap; border-top:1px solid var(--line-soft); padding-top:24px; }
-  .stat-strip div{ font-family:'IBM Plex Mono', monospace; font-size:11px; color: var(--muted); }
-  .stat-strip strong{ display:block; font-family:'Cormorant Garamond', serif; font-size:26px; color: var(--gold); font-weight:600; }
-
-  /* ---------- BIO ---------- */
-  .bio{ padding: 20px 0 70px; }
-  .bio-inner{ display:grid; grid-template-columns: 130px 1fr; gap:36px; align-items:start; border-top:1px solid var(--line-soft); padding-top:44px; }
-  .bio-mark{ font-family:'Cormorant Garamond', serif; font-size:70px; color: var(--gold-soft); line-height:1; }
-  .bio-inner h2{ font-family:'Cormorant Garamond', serif; font-size:26px; margin-bottom:16px; }
-  .bio-inner p{ font-size:14.5px; line-height:1.9; color: var(--muted); max-width:640px; }
-  @media (max-width: 640px){ .bio-inner{ grid-template-columns:1fr; } .bio-mark{ display:none; } }
-
-  /* ---------- SERVICES ---------- */
-  .services{ padding: 20px 0 20px; }
-  .section-head{ margin-bottom:36px; border-top:1px solid var(--line-soft); padding-top:44px; }
-  .section-head .eyebrow{ margin-bottom:14px; }
-  .section-head h2{ font-family:'Cormorant Garamond', serif; font-size:32px; font-weight:500; }
-  .section-head p{ color:var(--muted); font-size:14px; margin-top:8px; max-width:440px; }
-  .card-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:18px; }
-  .card{ position:relative; background: linear-gradient(180deg, var(--card), #171717); border:1px solid var(--line); border-radius:6px; padding:28px 26px 24px; display:flex; flex-direction:column; gap:12px; overflow:hidden; }
-  .card:hover{ border-color: var(--gold-soft); }
-  .tag{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color: var(--gold); }
-  .card h3{ font-family:'Cormorant Garamond', serif; font-size:22px; font-weight:500; }
-  .card p{ font-size:13px; color: var(--muted); line-height:1.6; }
-  .card-foot{ margin-top:18px; display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--line-soft); padding-top:16px; }
-  .card-foot .price{ font-family:'IBM Plex Mono', monospace; font-size:11px; color: var(--muted); }
-  .card-btn{ font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:500; letter-spacing:.04em; background:none; border:1px solid var(--gold-soft); color: var(--gold); padding:8px 14px; border-radius:2px; cursor:pointer; }
-  .card-btn:hover{ background: var(--gold); color:#121212; }
-
-  /* ---------- TESTIMONIALS / EVENTS (flexible block) ---------- */
-  .flex-block{ padding: 60px 0 20px; }
-  .flex-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:16px; }
-  .flex-card{ border:1px dashed var(--line); border-radius:6px; padding:24px; min-height:150px; display:flex; flex-direction:column; justify-content:center; gap:8px; background: rgba(212,175,55,0.02); }
-  .flex-card .flex-tag{ font-family:'IBM Plex Mono', monospace; font-size:10px; text-transform:uppercase; letter-spacing:.08em; color: var(--gold-soft); }
-  .flex-card p{ font-size:13px; color:#6c6a64; line-height:1.6; font-style:italic; }
-
-  /* ---------- CHANNELS ---------- */
-  .channels{ padding: 40px 0 80px; }
-  .channel-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); gap:14px; }
-  .channel-link{ display:flex; align-items:center; gap:14px; padding:18px 20px; border:1px solid var(--line-soft); border-radius:5px; text-decoration:none; transition:.2s ease; }
-  .channel-link:hover{ border-color: var(--gold-soft); background: rgba(212,175,55,0.04); }
-  .channel-link svg{ width:20px; height:20px; stroke: var(--gold); flex-shrink:0; }
-  .channel-link .ch-name{ font-family:'IBM Plex Mono', monospace; font-size:10px; text-transform:uppercase; letter-spacing:.08em; color: var(--muted); }
-  .channel-link .ch-handle{ font-size:13.5px; font-weight:500; margin-top:2px; }
-
-  footer{ padding:30px 0 46px; text-align:center; border-top:1px solid var(--line-soft); }
-  footer button{ background:none; border:none; font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:#6c6a64; cursor:pointer; letter-spacing:.06em; }
-  footer button:hover{ color: var(--gold); }
-
-  .overlay{ position:fixed; inset:0; background: rgba(0,0,0,0.72); display:none; align-items:center; justify-content:center; padding:20px; z-index:60; }
-  .overlay.open{ display:flex; }
-  .modal{ background: var(--card); border:1px solid var(--line); border-radius:6px; max-width:440px; width:100%; padding:32px 28px; position:relative; }
-  .modal h3{ font-family:'Cormorant Garamond', serif; font-size:24px; color: var(--gold); margin-bottom:4px; }
-  .modal p.sub{ font-size:13px; color: var(--muted); margin-bottom:20px; }
-  .close-x{ position:absolute; top:18px; right:18px; background:none; border:none; font-size:16px; cursor:pointer; color: var(--muted); }
-  label{ font-size:11.5px; font-weight:600; color: var(--muted); display:block; margin:14px 0 6px; letter-spacing:.02em; }
-  input{ width:100%; padding:11px 12px; border:1px solid var(--line-soft); border-radius:3px; font-family:'Inter',sans-serif; font-size:14px; background:#141414; color: var(--ink); }
-  input:focus{ outline:none; border-color: var(--gold); }
-  .submit-btn{ margin-top:22px; width:100%; background: var(--gold); color:#121212; border:none; padding:14px; border-radius:3px; font-weight:600; font-size:14px; cursor:pointer; }
-  .submit-btn:hover{ background:#e6c25c; }
-  .form-note{ font-size:11px; color:#6c6a64; margin-top:10px; line-height:1.5; }
-  .success-box{ text-align:center; padding:20px 0; }
-  .success-box .mark{ font-size:32px; color: var(--gold); margin-bottom:10px; }
-
-  .admin-screen{ display:none; min-height:100vh; }
-  .admin-screen.open{ display:block; }
-  .admin-top{ background: var(--bg-elev); border-bottom:1px solid var(--line-soft); padding:26px 0; }
-  .admin-top .wrap{ display:flex; justify-content:space-between; align-items:center; }
-  .admin-top h2{ font-family:'Cormorant Garamond', serif; font-size:24px; color: var(--gold); }
-  .back-link{ background:none; border:1px solid var(--line-soft); color:var(--ink); font-size:11px; padding:9px 14px; border-radius:3px; cursor:pointer; font-family:'IBM Plex Mono', monospace; }
-  .kpi-row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:16px; margin: 32px 0; }
-  .kpi{ background: var(--card); border:1px solid var(--line-soft); border-radius:5px; padding:20px; }
-  .kpi .label{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
-  .kpi .value{ font-family:'Cormorant Garamond', serif; font-size:32px; font-weight:600; color: var(--gold); margin-top:6px; }
-  .table-wrap{ background: var(--card); border:1px solid var(--line-soft); border-radius:5px; overflow:auto; margin-bottom:60px; }
-  table{ width:100%; border-collapse:collapse; font-size:12.5px; min-width:640px; }
-  th{ text-align:left; background: var(--bg-elev); color:var(--gold); padding:11px 14px; font-family:'IBM Plex Mono', monospace; font-weight:500; font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; }
-  td{ padding:11px 14px; border-bottom:1px solid var(--line-soft); color: var(--ink); }
-  tr:last-child td{ border-bottom:none; }
-  .empty-row td, .loading-row td{ text-align:center; color:#6c6a64; padding:34px; font-family:'IBM Plex Mono', monospace; font-size:12px; }
-  .pill{ font-family:'IBM Plex Mono', monospace; font-size:10px; padding:3px 8px; border-radius:10px; background: rgba(212,175,55,0.12); color: var(--gold); }
-
-  @media (max-width: 600px){ .stat-strip{ gap:22px; } .topbar .wrap{ justify-content:center; } }
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>JASON AT VIETNAM｜越南在地情報、包車導遊、旅行安排與商務考察</title>
+<meta name="description" content="Jason 是長期在越南生活的台灣中英文 KOL。從胡志明到河內，提供在地情報、包車導遊、飯店體驗、商務考察與避坑攻略。Taiwanese KOL living in Vietnam: local intel, private cars, guides, hotels, business tours." />
+<!-- TODO: 部署後把下面兩個網址換成你的真實網址 / Replace after deployment -->
+<link rel="canonical" href="https://YOUR-USERNAME.github.io/YOUR-REPO/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="JASON AT VIETNAM — 越南在地情報與旅行安排" />
+<meta property="og:description" content="從胡志明到河內，把親自跑過、談過、驗證過的越南安排好。" />
+<meta property="og:url" content="https://YOUR-USERNAME.github.io/YOUR-REPO/" />
+<meta property="og:image" content="https://YOUR-USERNAME.github.io/YOUR-REPO/assets/og-cover.jpg" />
+<meta property="og:locale" content="zh_TW" />
+<meta name="theme-color" content="#111111" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "JASON AT VIETNAM",
+  "description": "Local Vietnam intelligence, private cars, guides, hotel experiences, business tours and scam-avoidance guides by a Taiwanese creator living in Vietnam.",
+  "areaServed": "Vietnam",
+  "sameAs": [
+    "https://www.instagram.com/jason.at.vietnam",
+    "https://www.tiktok.com/@jason.at.vietnam",
+    "https://t.me/jason_at_vietnam"
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Sans+TC:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<script>
-const DICT = {
-  zh: {
-    eyebrow1: "在越台灣人 · 全越南在地對接",
-    h1: "越南不是攻略上寫的那樣，<em>是我帶你去的那樣。</em>",
-    lede: "從北越到南越，兩年多在地生活，真實配合的司機、導遊、老師、店家都是我親自跑過、談過價的管道。填一次表單，我用 LINE / Telegram 親自跟你對接。",
-    ctaServices: "看服務項目", ctaChannels: "加我 LINE / Telegram",
-    stat1: "IG 追蹤者", stat2: "社群成員", stat3: "年越南在地經驗",
-    bioEyebrow: "關於我", bioTitle: "北越到南越，兩年多走出來的路",
-    bioText: "大學一畢業，我就飛來胡志明市旅行，結果一頭栽進這座城市，還沒回台灣人就已經在找外派工作機會。第一份工作被派去北越，在那裡做了一年多的台幹，從聽不懂到能用越南文聊生活瑣事，把自己活成了半個越南人。後來調來南越，開始經營自媒體，做行銷與廣告，不到半年內容就衝上百萬流量。從北到南，從產線到鏡頭前，我很清楚在越南「能把一件事辦成」需要什麼——這也是我把這些年累積的人脈跟經驗，整理成看得到、找得到的服務的原因。",
-    servicesEyebrow: "服務項目", servicesTitle: "六項在地對接",
-    servicesSub: "選一項，填一下需求，我親自用 LINE 或 Telegram 跟你確認細節。",
-    s1tag: "企業旅遊", s1title: "員工旅遊包套規劃", s1desc: "團體行程、住宿、交通、餐飲整包規劃，適合公司員工旅遊或部門出遊。", s1price: "依人數報價",
-    s2tag: "揪團 / 單兵旅行", s2title: "朋友揪團 · 單人旅行", s2desc: "主打越式洗頭、包車、簽證代辦、奧黛體驗，一個人來或揪一團朋友都能安排。", s2price: "依行程報價",
-    s3tag: "特別服務", s3title: "客製化 · 私人訂制", s3desc: "有些需求不方便寫在檯面上——沒關係，私訊直接談，不多問，只負責幫你辦到。", s3price: "私訊報價",
-    s4tag: "語言教學", s4title: "越南文一對一教學", s4desc: "合作老師親自授課，從生活會話學起，學到你敢在越南街頭自己點餐殺價。", s4price: "依堂數報價",
-    s5tag: "財務規劃", s5title: "換匯與資金安排", s5desc: "台幣／美金／越南盾換匯對接，在地信任管道，匯率透明。", s5price: "即時匯率",
-    s6tag: "產業考察", s6title: "南北越工廠實地考察", s6desc: "想了解越南設廠、供應鏈，不管北越或南越，安排實地走訪對接窗口。", s6price: "依需求報價",
-    inquire: "我要詢問",
-    flexEyebrow: "近況", flexTitle: "客戶回饋 & 活動快訊",
-    flex1tag: "客戶回饋", flex1text: "這裡之後會放上真實客戶的評價與回饋。",
-    flex2tag: "活動快訊", flex2text: "近期活動與限定優惠將公布在這裡，敬請關注。",
-    channelsEyebrow: "直接聯絡", channelsTitle: "所有預約都透過以下管道確認",
-    formSub: "填一次就好，我會用你留的聯絡方式親自跟你確認細節與報價。",
-    fName: "你的稱呼", fNamePh: "怎麼稱呼你",
-    fContact: "聯絡方式", fContactPh: "IG / LINE ID / Telegram",
-    fDate: "預計日期", fAmount: "預估金額（VND 或 TWD）", fAmountPh: "例如 3,000,000 VND",
-    submit: "送出需求", formNote: "送出後我會盡快用你留的聯絡方式跟你確認細節與報價。",
-    successTitle: "需求已收到", successSub: "我這邊會盡快聯絡你，謝謝！",
-    adminBtn: "後台 · Dashboard",
-    adminTitle: "訂單儀表板", back: "← 回到首頁",
-    kpiToday: "今日筆數", kpiTodayAmt: "今日預估金額合計", kpiTotal: "累計總筆數", kpiTotalAmt: "累計預估金額",
-    thTime: "時間", thService: "服務項目", thName: "稱呼", thContact: "聯絡方式", thDate: "預計日期", thAmount: "預估金額",
-    emptyRow: "目前還沒有需求，分享出去的連結被填之後會出現在這裡",
-    loading: "讀取中...", wrongPw: "密碼錯誤，拒絕存取。"
-  },
-  en: {
-    eyebrow1: "Taiwanese in Vietnam · Nationwide Insider Access",
-    h1: "Vietnam isn't the version in the guidebook. <em>It's the version I take you to.</em>",
-    lede: "Two-plus years living here, north to south — real drivers, guides, teachers and shops I personally use and negotiate with. Fill the form once and I'll follow up on LINE / Telegram myself.",
-    ctaServices: "View Services", ctaChannels: "Add LINE / Telegram",
-    stat1: "IG Followers", stat2: "Community Members", stat3: "Years in Vietnam",
-    bioEyebrow: "About Me", bioTitle: "North to South — Two-Plus Years in the Making",
-    bioText: "I flew to Ho Chi Minh City for a trip right after graduating — and never really left. Before I'd even made it back to Taiwan, I was already chasing a posting back to Vietnam. My first role sent me north, where I spent over a year as an expat, going from not understanding a word to handling daily life in Vietnamese. Then I moved south, started building content, and within under six months my marketing and media work had crossed a million views. From the factory floor to the camera lens, north to south — I know what it actually takes to get something done here. That's what this page is: the people and know-how I've built, organized into something you can actually use.",
-    servicesEyebrow: "Services", servicesTitle: "Six Local Connections",
-    servicesSub: "Pick one, tell me what you need, I'll confirm details on LINE or Telegram myself.",
-    s1tag: "Corporate Travel", s1title: "Company Trip Packages", s1desc: "Full group itinerary — lodging, transport, dining — planned for company or department trips.", s1price: "Priced by group size",
-    s2tag: "Group / Solo Travel", s2title: "Friends' Trips & Solo Travel", s2desc: "Featuring Vietnamese hair-wash spas, private cars, visa arrangement, and áo dài experiences — solo or with a group.", s2price: "Priced by itinerary",
-    s3tag: "Special Requests", s3title: "Custom & Private Arrangements", s3desc: "Some requests aren't easy to put on a page — that's fine, message me directly. No questions asked, just handled.", s3price: "Quoted privately",
-    s4tag: "Language Lessons", s4title: "1-on-1 Vietnamese Lessons", s4desc: "Real teachers, real conversation — from daily basics to bargaining like a local.", s4price: "Priced by session",
-    s5tag: "Financial Planning", s5title: "Currency Exchange & Transfers", s5desc: "TWD/USD/VND exchange through trusted local channels, transparent rates.", s5price: "Live rate",
-    s6tag: "Industry Tours", s6title: "Factory Visits — North & South", s6desc: "For anyone exploring manufacturing or sourcing anywhere in Vietnam, north or south.", s6price: "Quoted on request",
-    inquire: "Inquire",
-    flexEyebrow: "Latest", flexTitle: "Reviews & Announcements",
-    flex1tag: "Client Reviews", flex1text: "Real client reviews and feedback will be featured here.",
-    flex2tag: "Announcements", flex2text: "Upcoming events and limited-time offers will be posted here soon.",
-    channelsEyebrow: "Get In Touch", channelsTitle: "All bookings are confirmed through these channels",
-    formSub: "One form is all it takes — I'll confirm details and pricing on the contact you leave.",
-    fName: "Your Name", fNamePh: "How should I address you",
-    fContact: "Contact", fContactPh: "IG / LINE ID / Telegram",
-    fDate: "Preferred Date", fAmount: "Estimated Budget (VND or TWD)", fAmountPh: "e.g. 3,000,000 VND",
-    submit: "Send Request", formNote: "I'll reach out on the contact info you left as soon as possible.",
-    successTitle: "Request Received", successSub: "I'll be in touch shortly, thank you!",
-    adminBtn: "Admin · Dashboard",
-    adminTitle: "Bookings Dashboard", back: "← Back to site",
-    kpiToday: "Today's Bookings", kpiTodayAmt: "Today's Est. Total", kpiTotal: "All-Time Bookings", kpiTotalAmt: "All-Time Est. Total",
-    thTime: "Time", thService: "Service", thName: "Name", thContact: "Contact", thDate: "Date", thAmount: "Amount",
-    emptyRow: "No requests yet — they'll appear here once your link starts getting filled in",
-    loading: "Loading...", wrongPw: "Incorrect password. Access denied."
-  }
-};
-let currentLang = 'zh';
-</script>
-
+<!-- ============ 1. 頂部社群列 ============ -->
 <div class="topbar">
-  <div class="wrap">
+  <div class="container topbar-inner">
     <div class="social-row">
-      <a class="social-item" href="https://www.instagram.com/jason.at.vietnam" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg>
-        Instagram
-      </a>
-      <a class="social-item" href="https://www.tiktok.com/@jason.at.vietnam" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M14 4v9.5a3.5 3.5 0 1 1-3-3.46"/><path d="M14 4a5 5 0 0 0 5 5"/></svg>
-        TikTok
-      </a>
-      <a class="social-item" href="https://lin.ee/NltI8Vl" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 4h16v12H8l-4 4V4z"/></svg>
-        LINE
-      </a>
-      <a class="social-item" href="https://t.me/jason_at_vietnam" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M21 4L2 12l7 2 2 6 3-4 5 3 2-15z"/></svg>
-        Telegram
-      </a>
+      <a href="https://www.instagram.com/jason.at.vietnam" target="_blank" rel="noopener">Instagram <span>@jason.at.vietnam</span></a>
+      <a href="https://www.tiktok.com/@jason.at.vietnam" target="_blank" rel="noopener">TikTok <span>@jason.at.vietnam</span></a>
+      <a href="https://lin.ee/NltI8Vl" target="_blank" rel="noopener" data-i18n="top_line">官方 LINE</a>
+      <a href="https://t.me/jason_at_vietnam" target="_blank" rel="noopener">Telegram <span>@jason_at_vietnam</span></a>
     </div>
-    <div class="tagline">JASON.VIETNAM</div>
+    <div class="tagline">JASON AT VIETNAM · LOCAL INTELLIGENCE</div>
   </div>
 </div>
 
-<nav>
-  <div class="wrap">
-    <div class="brand">JASON · VIETNAM</div>
-    <div class="lang-switch">
-      <button data-lang="zh" class="active" onclick="setLang('zh')">中文</button>
-      <button data-lang="en" onclick="setLang('en')">EN</button>
+<!-- ============ 2. 導覽列 ============ -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a class="logo" href="#top">JASON · VIETNAM</a>
+    <nav class="menu" id="menu" aria-label="Main">
+      <a href="#cities" data-i18n="nav_cities">探索城市</a>
+      <a href="#guides" data-i18n="nav_guides">實戰攻略</a>
+      <a href="#services" data-i18n="nav_services">服務安排</a>
+      <a href="#about" data-i18n="nav_about">關於 Jason</a>
+      <a class="menu-line" href="https://lin.ee/NltI8Vl" target="_blank" rel="noopener" data-i18n="nav_line">加入 LINE</a>
+    </nav>
+    <div class="nav-tools">
+      <button class="lang-btn" id="langBtn" type="button" aria-label="Switch language">EN</button>
+      <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
     </div>
   </div>
-</nav>
+</header>
 
-<div id="publicSite">
-  <section class="hero">
-    <div class="wrap">
-      <div class="eyebrow" data-i18n="eyebrow1"></div>
-      <h1 data-i18n-html="h1"></h1>
-      <p class="lede" data-i18n="lede"></p>
-      <div class="hero-cta">
-        <a href="#services" class="btn btn-gold" data-i18n="ctaServices"></a>
-        <a href="#channels" class="btn btn-ghost" data-i18n="ctaChannels"></a>
+<main id="top">
+
+<!-- ============ 3. HERO ============ -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy reveal">
+      <div class="eyebrow" data-i18n="hero_eyebrow">在越台灣人 · 北越到南越在地對接</div>
+      <h1 data-i18n-html="hero_h1">越南不是攻略上寫的那樣，<br><em>是我帶你去的那樣。</em></h1>
+      <p class="lede" data-i18n="hero_sub">從胡志明到河內，我把親自跑過、談過、驗證過的司機、導遊、飯店與體驗整理好。把日期、人數與預算傳給我，少走冤枉路。</p>
+      <div class="btn-row">
+        <a class="btn btn-gold" href="#cities" data-i18n="hero_cta1">探索越南城市</a>
+        <a class="btn btn-ghost" href="https://lin.ee/NltI8Vl" target="_blank" rel="noopener" data-i18n="hero_cta2">加入官方 LINE</a>
       </div>
-      <div class="stat-strip">
-        <div><strong>31,000+</strong><span data-i18n="stat1"></span></div>
-        <div><strong>1,000+</strong><span data-i18n="stat2"></span></div>
-        <div><strong>2+</strong><span data-i18n="stat3"></span></div>
+      <div class="stats">
+        <div><strong>31,000+</strong><span data-i18n="stat1">IG 追蹤者</span></div>
+        <div><strong>1,000+</strong><span data-i18n="stat2">社群成員</span></div>
+        <div><strong>2+</strong><span data-i18n="stat3">年越南在地經驗</span></div>
       </div>
     </div>
-  </section>
+    <figure class="hero-photo reveal">
+      <!-- REPLACE IMAGE：換成 Jason 本人照片或越南城市實拍。把檔案放進 assets/ 後改 src="assets/hero.jpg" -->
+      <img src="https://picsum.photos/seed/vn-hero/900/1100" alt="Jason in Vietnam (placeholder)" loading="eager" />
+      <figcaption data-i18n="hero_photo_note">Jason 本人照片預留位</figcaption>
+    </figure>
+  </div>
+</section>
 
-  <section class="bio">
-    <div class="wrap">
-      <div class="bio-inner">
-        <div class="bio-mark">”</div>
-        <div>
-          <div class="eyebrow" data-i18n="bioEyebrow"></div>
-          <h2 data-i18n="bioTitle"></h2>
-          <p data-i18n="bioText"></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="services" id="services">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow" data-i18n="servicesEyebrow"></div>
-        <h2 data-i18n="servicesTitle"></h2>
-        <p data-i18n="servicesSub"></p>
-      </div>
-      <div class="card-grid" id="cardGrid"></div>
-    </div>
-  </section>
-
-  <section class="flex-block">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow" data-i18n="flexEyebrow"></div>
-        <h2 data-i18n="flexTitle"></h2>
-      </div>
-      <div class="flex-grid">
-        <div class="flex-card"><div class="flex-tag" data-i18n="flex1tag"></div><p data-i18n="flex1text"></p></div>
-        <div class="flex-card"><div class="flex-tag" data-i18n="flex2tag"></div><p data-i18n="flex2text"></p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="channels" id="channels">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow" data-i18n="channelsEyebrow"></div>
-        <h2 data-i18n="channelsTitle"></h2>
-      </div>
-      <div class="channel-grid">
-        <a class="channel-link" href="https://lin.ee/NltI8Vl" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 4h16v12H8l-4 4V4z"/></svg>
-          <div><div class="ch-name">LINE</div><div class="ch-handle">官方帳號</div></div>
-        </a>
-        <a class="channel-link" href="https://t.me/jason_at_vietnam" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M21 4L2 12l7 2 2 6 3-4 5 3 2-15z"/></svg>
-          <div><div class="ch-name">Telegram</div><div class="ch-handle">@jason_at_vietnam</div></div>
-        </a>
-        <a class="channel-link" href="https://www.instagram.com/jason.at.vietnam" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg>
-          <div><div class="ch-name">Instagram</div><div class="ch-handle">jason.at.vietnam</div></div>
-        </a>
-        <a class="channel-link" href="https://www.tiktok.com/@jason.at.vietnam" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M14 4v9.5a3.5 3.5 0 1 1-3-3.46"/><path d="M14 4a5 5 0 0 0 5 5"/></svg>
-          <div><div class="ch-name">TikTok</div><div class="ch-handle">jason.at.vietnam</div></div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="wrap">
-      <button onclick="showAdmin()" data-i18n="adminBtn"></button>
-    </div>
-  </footer>
-</div>
-
-<div class="overlay" id="overlay">
-  <div class="modal">
-    <button class="close-x" onclick="closeForm()">✕</button>
-    <div id="formView">
-      <h3 id="formTitle"></h3>
-      <p class="sub" data-i18n="formSub"></p>
-      <form id="bookingForm" onsubmit="submitBooking(event)">
-        <label data-i18n="fName"></label>
-        <input type="text" id="f_name" required data-i18n-ph="fNamePh" />
-        <label data-i18n="fContact"></label>
-        <input type="text" id="f_contact" required data-i18n-ph="fContactPh" />
-        <label data-i18n="fDate"></label>
-        <input type="date" id="f_date" />
-        <label data-i18n="fAmount"></label>
-        <input type="text" id="f_amount" data-i18n-ph="fAmountPh" />
-        <button type="submit" class="submit-btn" data-i18n="submit"></button>
-        <p class="form-note" data-i18n="formNote"></p>
-      </form>
-    </div>
-    <div id="successView" style="display:none;">
-      <div class="success-box">
-        <div class="mark">✓</div>
-        <h3 data-i18n="successTitle"></h3>
-        <p class="sub" data-i18n="successSub"></p>
-      </div>
+<!-- ============ 4. 信任理由 ============ -->
+<section class="section" id="trust">
+  <div class="container">
+    <h2 class="section-title reveal" data-i18n="trust_title">不是給你一張名單，是幫你把越南安排好。</h2>
+    <div class="grid grid-3">
+      <article class="card pad reveal"><div class="rule"></div><h3 data-i18n="t1_title">在地驗證</h3><p data-i18n="t1_text">不是網路抄來的資訊；只分享 Jason 實際接觸、確認過的安排方式。</p></article>
+      <article class="card pad reveal"><div class="rule"></div><h3 data-i18n="t2_title">出發前確認</h3><p data-i18n="t2_text">行程、集合方式、包含內容與預算，在出發前先講清楚。</p></article>
+      <article class="card pad reveal"><div class="rule"></div><h3 data-i18n="t3_title">持續更新</h3><p data-i18n="t3_text">店況、交通、季節、規則一直變；攻略與推薦項目定期更新。</p></article>
     </div>
   </div>
-</div>
+</section>
 
-<div class="admin-screen" id="adminScreen">
-  <div class="admin-top">
-    <div class="wrap">
-      <h2 data-i18n="adminTitle"></h2>
-      <button class="back-link" onclick="hideAdmin()" data-i18n="back"></button>
+<!-- ============ 5. 城市探索 ============ -->
+<section class="section" id="cities">
+  <div class="container">
+    <h2 class="section-title reveal" data-i18n="cities_title">從北到南，選你的越南。</h2>
+    <div class="grid grid-4">
+      <!-- 每張城市卡的 href 之後可改成獨立頁面，例如 cities/hcmc.html -->
+      <a class="city reveal" href="#guides">
+        <!-- REPLACE IMAGE -->
+        <img src="https://picsum.photos/seed/vn-hcmc/700/940" alt="Ho Chi Minh City (placeholder)" loading="lazy" />
+        <span class="badge" data-i18n="badge_priority">優先更新中</span>
+        <div class="city-text"><h3 data-i18n="city1_name">胡志明 HCMC</h3><p data-i18n="city1_desc">城市節奏、咖啡、美食、在地生活。</p><span class="more" data-i18n="city_cta">查看城市攻略 →</span></div>
+      </a>
+      <a class="city reveal" href="#guides">
+        <img src="https://picsum.photos/seed/vn-hanoi/700/940" alt="Hanoi (placeholder)" loading="lazy" />
+        <span class="badge" data-i18n="badge_priority2">優先更新中</span>
+        <div class="city-text"><h3 data-i18n="city2_name">河內 Hanoi</h3><p data-i18n="city2_desc">老城、人文、北越日常與文化深度。</p><span class="more" data-i18n="city_cta2">查看城市攻略 →</span></div>
+      </a>
+      <a class="city reveal" href="#guides">
+        <img src="https://picsum.photos/seed/vn-danang/700/940" alt="Da Nang (placeholder)" loading="lazy" />
+        <div class="city-text"><h3 data-i18n="city3_name">峴港 Da Nang</h3><p data-i18n="city3_desc">海岸、度假、會安與輕鬆旅行。</p><span class="more" data-i18n="city_cta3">查看城市攻略 →</span></div>
+      </a>
+      <a class="city reveal" href="#guides">
+        <img src="https://picsum.photos/seed/vn-phuquoc/700/940" alt="Phu Quoc (placeholder)" loading="lazy" />
+        <div class="city-text"><h3 data-i18n="city4_name">富國島 Phu Quoc</h3><p data-i18n="city4_desc">海島、夕陽、飯店與慢旅行。</p><span class="more" data-i18n="city_cta4">查看城市攻略 →</span></div>
+      </a>
     </div>
   </div>
-  <div class="wrap">
-    <div class="kpi-row" id="kpiRow"></div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th data-i18n="thTime"></th><th data-i18n="thService"></th><th data-i18n="thName"></th>
-            <th data-i18n="thContact"></th><th data-i18n="thDate"></th><th data-i18n="thAmount"></th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
+</section>
 
-<script>
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzIuojcmDHylAZdEBManqIaQOfSgXrwRkWFLlHhlwvprwEfdOiaDuwN-CbzS1smAH4/exec";
-  const ADMIN_PASSWORD = "jsavn16888";
-
-  const SERVICES = ['s1','s2','s3','s4','s5','s6'];
-  let currentService = 's1';
-
-  function renderCards(){
-    const grid = document.getElementById('cardGrid');
-    const d = DICT[currentLang];
-    grid.innerHTML = SERVICES.map(key => `
-      <div class="card">
-        <span class="tag">${d[key+'tag']}</span>
-        <h3>${d[key+'title']}</h3>
-        <p>${d[key+'desc']}</p>
-        <div class="card-foot">
-          <span class="price">${d[key+'price']}</span>
-          <button class="card-btn" onclick="openForm('${key}')">${d.inquire}</button>
-        </div>
+<!-- ============ 6. 實戰攻略 ============ -->
+<section class="section" id="guides">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <h2 class="section-title" data-i18n="guides_title">Jason 實戰筆記</h2>
+        <p class="section-sub" data-i18n="guides_sub">讓你第一次去越南，也能少踩幾個坑。</p>
       </div>
-    `).join('');
-  }
+      <!-- Q版人物小徽章：之後把 assets/jason-chibi.png 放進去即可（找不到圖時顯示 J） -->
+      <div class="chibi" title="Jason 實戰筆記"><img src="assets/jason-chibi.png" alt="" onerror="this.remove()" /><b>J</b></div>
+    </div>
+    <div class="grid grid-4 guides">
+      <!-- 文章卡範本：複製整個 <article> 即可新增。href 之後可改成 guides/xxx.html -->
+      <article class="g-card reveal"><a href="#guides"><img src="https://picsum.photos/seed/vn-g1/640/400" alt="" loading="lazy" /><div class="g-body"><span class="tag" data-i18n="g1_tag">胡志明 · 住宿</span><h3 data-i18n="g1_title">第一次到胡志明，住第 1 郡還是 Thao Dien？</h3><p data-i18n="g1_ex">比較交通、生活機能與預算，幫你選出適合第一次到訪的住宿區域。</p><div class="meta"><span data-i18n="time_5">5 分鐘閱讀</span><span data-i18n="updated">最後更新：2026/XX/XX</span></div><span class="more" data-i18n="read">閱讀攻略 →</span></div></a></article>
+      <article class="g-card reveal"><a href="#guides"><img src="https://picsum.photos/seed/vn-g2/640/400" alt="" loading="lazy" /><div class="g-body"><span class="tag" data-i18n="g2_tag">胡志明 · 交通</span><h3 data-i18n="g2_title">胡志明機場到市區：Grab、接機與常見陷阱</h3><p data-i18n="g2_ex">抵達後怎麼叫車、怎麼確認價格，以及最常見的攬客情境。</p><div class="meta"><span data-i18n="time_4">4 分鐘閱讀</span><span data-i18n="updated2">最後更新：2026/XX/XX</span></div><span class="more" data-i18n="read2">閱讀攻略 →</span></div></a></article>
+      <article class="g-card reveal"><a href="#guides"><img src="https://picsum.photos/seed/vn-g3/640/400" alt="" loading="lazy" /><div class="g-body"><span class="tag" data-i18n="g3_tag">河內 · 行程</span><h3 data-i18n="g3_title">河內第一次自由行，三天怎麼排最順</h3><p data-i18n="g3_ex">用動線與節奏安排老城、美食與半日遊，避免每天來回奔波。</p><div class="meta"><span data-i18n="time_6">6 分鐘閱讀</span><span data-i18n="updated3">最後更新：2026/XX/XX</span></div><span class="more" data-i18n="read3">閱讀攻略 →</span></div></a></article>
+      <article class="g-card reveal"><a href="#guides"><img src="https://picsum.photos/seed/vn-g4/640/400" alt="" loading="lazy" /><div class="g-body"><span class="tag" data-i18n="g4_tag">通用 · 住宿</span><h3 data-i18n="g4_title">越南飯店怎麼選：地點、預算與安全感</h3><p data-i18n="g4_ex">從位置、夜間返程到評價真實度，一次整理挑選飯店的判斷方式。</p><div class="meta"><span data-i18n="time_5b">5 分鐘閱讀</span><span data-i18n="updated4">最後更新：2026/XX/XX</span></div><span class="more" data-i18n="read4">閱讀攻略 →</span></div></a></article>
+      <article class="g-card reveal"><a href="#guides"><img src="https://picsum.photos/seed/vn-g5/640/400" alt="" loading="lazy" /><div class="g-body"><span class="tag" data-i18n="g5_tag">通用 · 包車</span><h3 data-i18n="g5_title">在越南包車前，先確認這 6 件事</h3><p data-i18n="g5_ex">車型、時數、里程、過路費與停等規則，出發前先講清楚。</p><div class="meta"><span data-i18n="time_4b">4 分鐘閱讀</span><span data-i18n="updated5">最後更新：2026/XX/XX</span></div><span class="more" data-i18n="read5">閱讀攻略 →</span></div></a></article>
+      <article class="g-card reveal"><a href="#guides"><img src="https://picsum.photos/seed/vn-g6/640/400" alt="" loading="lazy" /><div class="g-body"><span class="tag" data-i18n="g6_tag">通用 · 體驗</span><h3 data-i18n="g6_title">越式洗頭與正規 SPA 怎麼挑才不踩雷</h3><p data-i18n="g6_ex">看環境、看價目、看評價，挑選透明且正規的放鬆體驗。</p><div class="meta"><span data-i18n="time_5c">5 分鐘閱讀</span><span data-i18n="updated6">最後更新：2026/XX/XX</span></div><span class="more" data-i18n="read6">閱讀攻略 →</span></div></a></article>
+      <article class="g-card reveal"><a href="#guides"><img src="https://picsum.photos/seed/vn-g7/640/400" alt="" loading="lazy" /><div class="g-body"><span class="tag" data-i18n="g7_tag">通用 · 避坑</span><h3 data-i18n="g7_title">越南旅客最常遇到的 7 種加價情境</h3><p data-i18n="g7_ex">從交通到餐飲與體驗，整理常見的臨時加價說法與應對方式。</p><div class="meta"><span data-i18n="time_4c">4 分鐘閱讀</span><span data-i18n="updated7">最後更新：2026/XX/XX</span></div><span class="more" data-i18n="read7">閱讀攻略 →</span></div></a></article>
+      <article class="g-card reveal"><a href="#guides"><img src="https://picsum.photos/seed/vn-g8/640/400" alt="" loading="lazy" /><div class="g-body"><span class="tag" data-i18n="g8_tag">比較 · 城市</span><h3 data-i18n="g8_title">胡志明與河內，第一次去該選哪一個？</h3><p data-i18n="g8_ex">依旅行天數、季節與喜好，比較兩座城市的節奏與玩法。</p><div class="meta"><span data-i18n="time_6b">6 分鐘閱讀</span><span data-i18n="updated8">最後更新：2026/XX/XX</span></div><span class="more" data-i18n="read8">閱讀攻略 →</span></div></a></article>
+    </div>
+    <div class="center reveal"><a class="btn btn-ghost" href="#guides" data-i18n="guides_all">查看全部攻略</a></div>
+  </div>
+</section>
 
-  function applyI18n(){
-    const d = DICT[currentLang];
-    document.querySelectorAll('[data-i18n]').forEach(el => { const k = el.getAttribute('data-i18n'); if(d[k]!==undefined) el.textContent = d[k]; });
-    document.querySelectorAll('[data-i18n-html]').forEach(el => { const k = el.getAttribute('data-i18n-html'); if(d[k]!==undefined) el.innerHTML = d[k]; });
-    document.querySelectorAll('[data-i18n-ph]').forEach(el => { const k = el.getAttribute('data-i18n-ph'); if(d[k]!==undefined) el.placeholder = d[k]; });
-    document.getElementById('formTitle').textContent = d[currentService+'title'];
-    renderCards();
-  }
+<!-- ============ 7. 服務安排 ============ -->
+<section class="section" id="services">
+  <div class="container">
+    <h2 class="section-title reveal" data-i18n="services_title">我可以幫你安排什麼</h2>
+    <p class="section-sub reveal" data-i18n="services_sub">你不需要把所有事情丟給我；只要在需要確認、需要對接、怕踩雷的地方找我。</p>
+    <div class="grid grid-4 services">
+      <!-- 服務卡範本：所有 CTA 都導向官方 LINE。圖片請換成真實照片 -->
+      <article class="sv reveal"><img src="https://picsum.photos/seed/vn-s1/600/380" alt="" loading="lazy" /><div class="sv-body"><span class="tag" data-i18n="sv1_tag">交通</span><h3 data-i18n="sv1_title">機場接送與包車</h3><p data-i18n="sv1_desc">事先確認車型、時段與總價，抵達不用臨場議價。</p><p class="for" data-i18n="sv1_for">適合：第一次到越南、攜家帶眷、行李多的旅客</p><a class="btn btn-ghost sm" href="https://lin.ee/NltI8Vl" target="_blank" rel="noopener" data-i18n="sv_cta1">傳日期給 Jason</a></div></article>
+      <article class="sv reveal"><img src="https://picsum.photos/seed/vn-s2/600/380" alt="" loading="lazy" /><div class="sv-body"><span class="tag" data-i18n="sv2_tag">導遊</span><h3 data-i18n="sv2_title">中英文導遊與行程安排</h3><p data-i18n="sv2_desc">依你的節奏安排半日到多日行程，需要時有中英文溝通支援。</p><p class="for" data-i18n="sv2_for">適合：想深入體驗、不想自己摸索的旅客</p><a class="btn btn-ghost sm" href="https://lin.ee/NltI8Vl" target="_blank" rel="noopener" data-i18n="sv_cta2">傳日期給 Jason</a></div></article>
+      <article class="sv reveal"><img src="https://picsum.photos/seed/vn-s3/600/380" alt="" loading="lazy" /><div class="sv-body"><span class="tag" data-i18n="sv3_tag">簽證</span><h3 data-i18n="sv3_title">簽證與快速通關資訊</h3><p data-i18n="sv3_desc">整理簽證類型、所需文件與機場通關注意事項，並提供合法申請管道的資訊。</p><p class="for" data-i18n="sv3_for">適合：第一次申辦簽證、行程時間緊的旅客</p><a class="btn btn-ghost sm" href="https://lin.ee/NltI8Vl" target="_blank" rel="noopener" data-i18n="sv_cta3">傳日期給 Jason</a></div></article>
+      <article class="sv reveal"><img src="https://picsum.photos/seed/vn-s4/600/380" alt="" loading="lazy" /><div class="sv-body"><span class="tag" data-i18n="sv4_tag">預約</span><h3 data-i18n="sv4_title">飯店、餐廳與特色體驗預約</h3><p data-i18n="sv4_desc">依預算與同行類型，協助確認位置、評價與預約方式。</p><p class="for" data-i18n="sv4_for">適合：朋友旅行、情侶、慶生與紀念日</p><a class="btn btn-ghost sm" href="https://lin.ee/NltI8Vl" target="_blank" rel="noopener" data-i18n="sv_cta4">傳日期給 Jason</a></div></article>
+      <article class="sv reveal"><img src="https://picsum.photos/seed/vn-s5/600/380" alt="" loading="lazy" /><div class="sv-body"><span class="tag" data-i18n="sv5_tag">體驗</span><h3 data-i18n="sv5_title">越式洗頭與正規 SPA 體驗</h3><p data-i18n="sv5_desc">挑選環境明確、價目透明的正規店家，事先說明內容與價格。</p><p class="for" data-i18n="sv5_for">適合：想體驗越式洗頭放鬆、重視透明報價的旅客</p><a class="btn btn-ghost sm" href="https://lin.ee/NltI8Vl" target="_blank" rel="noopener" data-i18n="sv_cta5">傳日期給 Jason</a></div></article>
+      <article class="sv reveal"><img src="https://picsum.photos/seed/vn-s6/600/380" alt="" loading="lazy" /><div class="sv-body"><span class="tag" data-i18n="sv6_tag">商務</span><h3 data-i18n="sv6_title">商務考察、工廠參訪與企業團建</h3><p data-i18n="sv6_desc">協助安排北越到南越的考察動線、翻譯對接與團體行程。</p><p class="for" data-i18n="sv6_for">適合：採購、設廠評估、公司員旅與團建</p><a class="btn btn-ghost sm" href="https://lin.ee/NltI8Vl" target="_blank" rel="noopener" data-i18n="sv_cta6">傳日期給 Jason</a></div></article>
+      <article class="sv reveal"><img src="https://picsum.photos/seed/vn-s7/600/380" alt="" loading="lazy" /><div class="sv-body"><span class="tag" data-i18n="sv7_tag">客製</span><h3 data-i18n="sv7_title">私人客製旅行規劃</h3><p data-i18n="sv7_desc">從城市組合到每日節奏，依你的日期、人數與預算整體規劃。</p><p class="for" data-i18n="sv7_for">適合：單人自由行、情侶、小型包團</p><a class="btn btn-ghost sm" href="https://lin.ee/NltI8Vl" target="_blank" rel="noopener" data-i18n="sv_cta7">傳日期給 Jason</a></div></article>
+      <article class="sv sv-more reveal"><div class="sv-body"><div class="rule"></div><h3 data-i18n="sv_more_title">不確定選哪一項？</h3><p data-i18n="sv_more_text">先把日期與人數傳給我，我幫你判斷方向。</p><a class="btn btn-gold sm" href="https://lin.ee/NltI8Vl" target="_blank" rel="noopener" data-i18n="sv_more_cta">加入官方 LINE</a></div></article>
+    </div>
+  </div>
+</section>
 
-  function setLang(lang){
-    currentLang = lang;
-    document.querySelectorAll('.lang-switch button').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-    applyI18n();
-  }
+<!-- ============ 8. 避坑雷達 ============ -->
+<section class="section radar" id="radar">
+  <div class="container">
+    <h2 class="section-title reveal" data-i18n="radar_title">先別急著訂，這些事先知道。</h2>
+    <div class="grid grid-3">
+      <div class="r-item reveal"><h3 data-i18n="r1_title">機場假 Grab 與私人攬客</h3><p data-i18n="r1_text">抵達時只使用官方叫車 App 或事先確認的接送，不跟主動攬客的人走。</p></div>
+      <div class="r-item reveal"><h3 data-i18n="r2_title">不透明報價與臨時加價</h3><p data-i18n="r2_text">任何服務都先問清楚包含與不包含，並請對方以文字確認總價。</p></div>
+      <div class="r-item reveal"><h3 data-i18n="r3_title">飯店位置與夜間返程</h3><p data-i18n="r3_text">選住宿時多看地點與深夜返回的路線，不只看價格與照片。</p></div>
+      <div class="r-item reveal"><h3 data-i18n="r4_title">交通、包車前應確認的資訊</h3><p data-i18n="r4_text">確認車型、時數、公里範圍、過路費與停等規則，再決定是否成交。</p></div>
+      <div class="r-item reveal"><h3 data-i18n="r5_title">旅遊旺季與臨時客滿</h3><p data-i18n="r5_text">節日與旺季的車輛、導遊與飯店容易客滿，建議提早確認日期。</p></div>
+      <div class="r-item reveal"><h3 data-i18n="r6_title">合法換匯與支付安全</h3><p data-i18n="r6_text">交易請使用合法銀行或授權換匯機構。Jason 提供的是旅客支付與換匯安全資訊，不提供兌換、代收、代付或私人匯率。</p></div>
+    </div>
+  </div>
+</section>
 
-  function openForm(serviceKey){
-    currentService = serviceKey;
-    document.getElementById('formTitle').textContent = DICT[currentLang][serviceKey+'title'];
-    document.getElementById('formView').style.display = 'block';
-    document.getElementById('successView').style.display = 'none';
-    document.getElementById('bookingForm').reset();
-    document.getElementById('overlay').classList.add('open');
-  }
-  function closeForm(){ document.getElementById('overlay').classList.remove('open'); }
+<!-- ============ 9. 關於 Jason ============ -->
+<section class="section" id="about">
+  <div class="container about-grid">
+    <figure class="about-photo reveal">
+      <!-- REPLACE IMAGE：Jason 真實照片 -->
+      <img src="https://picsum.photos/seed/vn-about/800/1000" alt="Jason (placeholder)" loading="lazy" />
+      <figcaption data-i18n="about_photo_note">Jason 真實照片預留位</figcaption>
+    </figure>
+    <div class="reveal">
+      <div class="eyebrow" data-i18n="about_eyebrow">關於 Jason</div>
+      <h2 class="section-title" data-i18n="about_title">北越到南越，兩年多走出來的路。</h2>
+      <p class="about-text" data-i18n="about_text">大學畢業後，我第一次來胡志明旅行，後來進入越南工作與生活。從北越的工廠到南越的城市，從聽不懂越南文到能處理生活與工作裡的大大小小事情。我開始把真正有用的資訊、可靠的合作管道與實戰經驗整理下來，因為我知道：在越南，找到資訊不難，找到能把事情辦好的人才難。</p>
+    </div>
+  </div>
+</section>
 
-  async function submitBooking(e){
-    e.preventDefault();
-    const d = DICT[currentLang];
-    const entry = {
-      service: d[currentService+'title'], name: document.getElementById('f_name').value,
-      contact: document.getElementById('f_contact').value, date: document.getElementById('f_date').value,
-      amount: document.getElementById('f_amount').value, lang: currentLang, createdAt: new Date().toISOString()
-    };
-    try{
-      if(GOOGLE_SCRIPT_URL && !GOOGLE_SCRIPT_URL.startsWith("PASTE_")){
-        await fetch(GOOGLE_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(entry) });
-      }
-      document.getElementById('formView').style.display = 'none';
-      document.getElementById('successView').style.display = 'block';
-    }catch(err){ alert('送出時發生問題，麻煩直接私訊我，謝謝！'); console.error(err); }
-  }
+<!-- ============ 10. 客戶回饋與更新 ============ -->
+<section class="section" id="voices">
+  <div class="container">
+    <h2 class="section-title reveal" data-i18n="voices_title">旅客回饋與最新更新</h2>
+    <p class="section-sub reveal" data-i18n="voices_note">真實回饋將於取得客人同意後公開。</p>
+    <div class="voices-grid">
+      <div class="grid grid-3 voices">
+        <!-- 回饋卡範本：把 .shot 內換成聊天截圖 / 旅客照片 / Google Review 截圖 -->
+        <figure class="v-card reveal"><div class="shot" data-i18n="shot_note">聊天截圖／旅客照片／Google Review 預留位</div><blockquote data-i18n="v1_text">「出發前就把集合方式與預算講清楚，整趟很安心。」</blockquote><figcaption data-i18n="v1_who">示範回饋 · 朋友旅行</figcaption></figure>
+        <figure class="v-card reveal"><div class="shot" data-i18n="shot_note2">聊天截圖／旅客照片／Google Review 預留位</div><blockquote data-i18n="v2_text">「第一次來河內，行程安排得很順，省下很多功課。」</blockquote><figcaption data-i18n="v2_who">示範回饋 · 單人自由行</figcaption></figure>
+        <figure class="v-card reveal"><div class="shot" data-i18n="shot_note3">聊天截圖／旅客照片／Google Review 預留位</div><blockquote data-i18n="v3_text">「公司團建的車輛與時間確認得很仔細。」</blockquote><figcaption data-i18n="v3_who">示範回饋 · 企業團建</figcaption></figure>
+      </div>
+      <aside class="week reveal">
+        <h3 data-i18n="week_title">本週更新</h3>
+        <ul>
+          <li><span>2026/XX/XX</span><b data-i18n="u1">胡志明機場接送資訊已更新</b></li>
+          <li><span>2026/XX/XX</span><b data-i18n="u2">河內住宿區域攻略新增</b></li>
+          <li><span>2026/XX/XX</span><b data-i18n="u3">越南支付安全指南更新</b></li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
 
-  function showAdmin(){
-    const pw = prompt('請輸入後台密碼 / Enter admin password');
-    if(pw !== ADMIN_PASSWORD){ if(pw !== null) alert(DICT[currentLang].wrongPw); return; }
-    document.getElementById('publicSite').style.display = 'none';
-    document.getElementById('adminScreen').classList.add('open');
-    loadAdminData();
-  }
-  function hideAdmin(){ document.getElementById('adminScreen').classList.remove('open'); document.getElementById('publicSite').style.display = 'block'; }
+<!-- ============ 11. 需求整理工具 ============ -->
+<section class="section tool" id="planner">
+  <div class="container narrow">
+    <h2 class="section-title reveal" data-i18n="tool_title">出發前，先讓我了解你的需求</h2>
+    <p class="section-sub reveal" data-i18n="tool_sub">填完會產生一段整理好的訊息，你可以複製後傳給官方 LINE。</p>
+    <form id="needForm" class="form reveal">
+      <div class="field"><label for="f_city" data-i18n="f_city">旅行城市</label>
+        <select id="f_city" required>
+          <option value="HCMC" data-i18n="o_hcmc">胡志明</option><option value="Hanoi" data-i18n="o_hanoi">河內</option>
+          <option value="Da Nang" data-i18n="o_danang">峴港</option><option value="Phu Quoc" data-i18n="o_pq">富國島</option>
+          <option value="Multiple" data-i18n="o_multi">多個城市／尚未決定</option></select></div>
+      <div class="field"><label for="f_people" data-i18n="f_people">人數</label><input id="f_people" type="number" min="1" max="200" value="2" required /></div>
+      <div class="field"><label for="f_depart" data-i18n="f_depart">出發日期</label><input id="f_depart" type="date" required /></div>
+      <div class="field"><label for="f_return" data-i18n="f_return">回程日期</label><input id="f_return" type="date" /></div>
+      <div class="field"><label for="f_who" data-i18n="f_who">同行類型</label>
+        <select id="f_who">
+          <option value="Friends" data-i18n="w_friends">朋友旅行</option><option value="Solo" data-i18n="w_solo">單人自由行</option>
+          <option value="Couple" data-i18n="w_couple">情侶</option><option value="Corporate" data-i18n="w_corp">企業團建</option>
+          <option value="Business" data-i18n="w_biz">商務考察</option></select></div>
+      <div class="field"><label for="f_cat" data-i18n="f_cat">需求分類</label>
+        <select id="f_cat">
+          <option value="Airport & private car" data-i18n="c_car">機場接送與包車</option><option value="Guide & itinerary" data-i18n="c_guide">導遊與行程安排</option>
+          <option value="Visa & fast track info" data-i18n="c_visa">簽證與快速通關資訊</option><option value="Hotel / dining / experiences" data-i18n="c_hotel">飯店、餐廳與體驗預約</option>
+          <option value="Hair wash & licensed spa" data-i18n="c_spa">越式洗頭與正規 SPA</option><option value="Business / factory / team building" data-i18n="c_biz">商務考察與企業團建</option>
+          <option value="Custom trip planning" data-i18n="c_custom">私人客製旅行規劃</option></select></div>
+      <div class="field full"><label for="f_budget" data-i18n="f_budget">預算區間（USD）</label>
+        <select id="f_budget">
+          <option value="Under $500" data-i18n="b1">$500 以下</option><option value="$500–1,500" data-i18n="b2">$500–1,500</option>
+          <option value="$1,500–3,000" data-i18n="b3">$1,500–3,000</option><option value="$3,000+" data-i18n="b4">$3,000 以上</option>
+          <option value="Not decided" data-i18n="b5">尚未決定</option></select></div>
+      <div class="field full"><label for="f_notes" data-i18n="f_notes">其他需求</label><textarea id="f_notes" rows="3" data-i18n-ph="f_notes_ph" placeholder="例如：想去的地點、飲食限制、行動不便需求…"></textarea></div>
+      <p class="warn full" data-i18n="f_warn">送出資料前，請勿填寫護照、信用卡、銀行帳戶或其他敏感個資。</p>
+      <p class="note full" data-i18n="f_nostore">本工具只會在你的瀏覽器內整理文字，不會儲存或上傳任何資料。</p>
+      <div class="full"><button class="btn btn-gold" type="submit" data-i18n="f_submit">產生需求訊息</button></div>
+    </form>
 
-  async function loadAdminData(){
-    const d = DICT[currentLang];
-    const tbody = document.getElementById('tableBody');
-    tbody.innerHTML = `<tr class="loading-row"><td colspan="6">${d.loading}</td></tr>`;
-    let list = [];
-    try{
-      if(GOOGLE_SCRIPT_URL && !GOOGLE_SCRIPT_URL.startsWith("PASTE_")){
-        const res = await fetch(GOOGLE_SCRIPT_URL);
-        list = await res.json();
-      }
-    }catch(err){ console.error(err); list = []; }
-    list.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
-    const todayStr = new Date().toISOString().slice(0,10);
-    const todayEntries = list.filter(x => (x.createdAt||'').slice(0,10) === todayStr);
-    function sumAmounts(entries){ let t=0; entries.forEach(x=>{ const n=parseFloat((x.amount||'').toString().replace(/[^0-9.]/g,'')); if(!isNaN(n)) t+=n; }); return t; }
-    document.getElementById('kpiRow').innerHTML = `
-      <div class="kpi"><div class="label">${d.kpiToday}</div><div class="value">${todayEntries.length}</div></div>
-      <div class="kpi"><div class="label">${d.kpiTodayAmt}</div><div class="value">${sumAmounts(todayEntries).toLocaleString()}</div></div>
-      <div class="kpi"><div class="label">${d.kpiTotal}</div><div class="value">${list.length}</div></div>
-      <div class="kpi"><div class="label">${d.kpiTotalAmt}</div><div class="value">${sumAmounts(list).toLocaleString()}</div></div>
-    `;
-    if(list.length === 0){ tbody.innerHTML = `<tr class="empty-row"><td colspan="6">${d.emptyRow}</td></tr>`; return; }
-    tbody.innerHTML = list.map(x => `
-      <tr><td>${x.createdAt ? new Date(x.createdAt).toLocaleString('zh-TW') : '—'}</td><td><span class="pill">${x.service||''}</span></td>
-      <td>${x.name||''}</td><td>${x.contact||''}</td><td>${x.date||'—'}</td><td>${x.amount||'—'}</td></tr>
-    `).join('');
-  }
+    <div id="result" class="result" hidden>
+      <div class="result-head"><span data-i18n="res_id_label">需求編號</span><b id="reqId">JV-DEMO-2026-001</b>
+        <span class="done" title="Jason 實戰筆記"><i>J</i><em data-i18n="res_done">整理完成</em></span></div>
+      <pre id="msgBox" tabindex="0"></pre>
+      <div class="btn-row">
+        <button class="btn btn-ghost" type="button" id="copyBtn" data-i18n="btn_copy">複製需求內容</button>
+        <button class="btn btn-gold" type="button" id="copyLineBtn" data-i18n="btn_copy_line">複製並前往官方 LINE</button>
+      </div>
+      <p class="note" id="copyStatus" role="status"></p>
+    </div>
+  </div>
+</section>
 
-  applyI18n();
-</script>
+<!-- ============ 12. 最終 CTA ============ -->
+<section class="section final">
+  <div class="container center">
+    <h2 class="section-title reveal" data-i18n="cta_title">不知道從哪裡開始？先把你的日期傳給我。</h2>
+    <p class="section-sub reveal" data-i18n="cta_text">你不一定要立刻訂服務。先說說你想去哪裡、幾個人、玩幾天，我會先幫你判斷方向。</p>
+    <a class="btn btn-gold reveal" href="https://lin.ee/NltI8Vl" target="_blank" rel="noopener" data-i18n="cta_btn">加入 Jason 官方 LINE</a>
+  </div>
+</section>
 
+<!-- ============ 隱私與服務聲明（placeholder，可替換為獨立頁面） ============ -->
+<section class="section legal">
+  <div class="container narrow">
+    <div id="privacy"><h3 data-i18n="priv_title">隱私權聲明</h3><p data-i18n="priv_text">本網站為靜態展示網站，不蒐集、不儲存任何訪客資料。需求整理工具僅在你的瀏覽器內產生訊息，不會送出到伺服器。聯絡與詢問皆透過官方 LINE 進行，請以 LINE 平台的隱私政策為準。</p></div>
+    <div id="terms"><h3 data-i18n="terms_title">服務聲明</h3><p data-i18n="terms_text">本站內容為旅行資訊與安排參考，實際價格、內容與可預約狀態以出發前雙方確認為準。Jason 不提供任何違法或不當服務，也不提供兌換、代收或代付。</p></div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ 13. Footer ============ -->
+<footer class="footer">
+  <div class="container foot-inner">
+    <div class="foot-brand">JASON AT VIETNAM</div>
+    <div class="foot-links">
+      <a href="https://www.instagram.com/jason.at.vietnam" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@jason.at.vietnam" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://lin.ee/NltI8Vl" target="_blank" rel="noopener" data-i18n="foot_line">官方 LINE</a>
+      <a href="https://t.me/jason_at_vietnam" target="_blank" rel="noopener">Telegram</a>
+      <a href="#privacy" data-i18n="foot_privacy">隱私權聲明</a>
+      <a href="#terms" data-i18n="foot_terms">服務聲明</a>
+    </div>
+    <div class="copy">© 2026 Jason at Vietnam. All rights reserved.</div>
+    <!-- 彩蛋：點小 J 會出現一句話（見 script.js） -->
+    <button class="egg" id="egg" type="button" aria-label="Easter egg">J</button>
+    <div class="egg-msg" id="eggMsg" hidden data-i18n="egg_msg">實戰筆記：出發前，先確認總價。</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
